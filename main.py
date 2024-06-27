@@ -5,7 +5,7 @@ import toml
 import smtplib, ssl, logging
 from email.message import EmailMessage
 
-from os.path import abspath
+from os.path import abspath, exists
 from os import mkdir
 
 # Initialize logger
@@ -27,14 +27,11 @@ logger.info("SMTP SERVER:%s:%s" % (SERVER, PORT))
 # Screenshot
 screenshot_name = date.today().strftime("%Y年%m月%d日备忘录.png")
 screenshot_path = ".\\screenshots\\" + screenshot_name
-try:
-    screenshot(abspath(screenshot_path))
-    logger.info("Saved screenshot:%s." % screenshot_path)
-except FileNotFoundError:
+if not exists(abspath(".\\screenshots\\")):
     mkdir(abspath(".\\screenshots\\"))
     logger.warning("Screenshot folder not found. Creating screenshot folder.")
-    screenshot(abspath(screenshot_path))
-    logger.info("Saved screenshot:%s." % screenshot_path)
+screenshot(abspath(screenshot_path))
+logger.info("Saved screenshot:%s." % screenshot_path)
 
 # Send E-mail
 
