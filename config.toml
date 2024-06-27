@@ -1,0 +1,9 @@
+from-addr = "liuzhiyu.sh@outlook.com"
+passwd = "8ik,lz34sGzsms"
+to-addr = "liuzhiyu.sh@outlook.com"
+to-name = "刘芝宇"
+from-name = "刘芝宇"
+title = "今日备忘录"
+
+server = "smtp-mail.outlook.com"
+port = 587

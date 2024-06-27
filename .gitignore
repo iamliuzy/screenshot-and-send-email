@@ -1,0 +1,5 @@
+main.build/*
+main.dist/*
+.venv/*
+screenshots/*
+latest.log
