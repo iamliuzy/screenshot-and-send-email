@@ -1,9 +1,18 @@
-from-addr = "liuzhiyu.sh@outlook.com"
-passwd = "8ik,lz34sGzsms"
-to-addr = "liuzhiyu.sh@outlook.com"
-to-name = "刘芝宇"
-from-name = "刘芝宇"
-title = "今日备忘录"
-
-server = "smtp-mail.outlook.com"
-port = 587
+# Replace the following <> and the contents between them with the corresponding values
+from-addr = "<from-email@example.com>"  # The sender's email address
+from-name = "<from-display-name>"  # The sender's display name
+passwd = "<123456>"  # The sender's account password
+to-addr = "<to-email@example.com>"  # The receiver's email address
+to-name = "<to-display-name>"  # The receiver's display name
+title = "<e-mail-title>"  # The title of the email
+server = "<smtp-server>"  # The SMTP server (normally is different from the email server)
+port = <25>  # The SMTP port
+encryption = <0>  # The encryption mode of the SMTP server
+# Details of SMTP port:
+#   25 - No encrypting
+#   465 - Encrypted
+#   (may be different)
+# Details of encryption mode:
+#   0 - No encrypting
+#   1 - Encrypted
+#   2 - No encrypting at first, convert to encrypted later.
