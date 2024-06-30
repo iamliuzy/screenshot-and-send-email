@@ -1,5 +1,8 @@
 main.build/*
 main.dist/*
 .venv/*
+
+# Test file.
+__config.toml
 screenshots/*
 latest.log
