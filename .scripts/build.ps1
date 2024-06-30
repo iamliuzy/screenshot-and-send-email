@@ -1,1 +1,1 @@
-nuitka main.py --standalone --include-data-file=.\config.toml=config.toml
+nuitka main.py --standalone --include-data-file=.\config.toml=config.toml --disable-console
