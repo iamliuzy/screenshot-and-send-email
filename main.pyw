@@ -10,9 +10,11 @@ from pathlib import Path
 
 class ConfigError():
     @staticmethod
-    def not_filled_properly():
+    def not_filled_properly(info=""):
         logger.critical("config.toml not filled properly.")
         logger.critical("In the config.toml file, replace the '<>' and the content between them with the correct values.")
+        if info != "":
+            logger.critical(info)
         exit()
     @staticmethod
     def not_found():
@@ -38,17 +40,17 @@ if not config_file.exists():
 try:
     config = toml.loads(config_file.read_text("utf-8"))  # Parse config
 except toml.decoder.TomlDecodeError:
-    ConfigError.not_filled_properly()
+    ConfigError.not_filled_properly("Unexpected '<>'.")
 for value in config.values():
     if not isinstance(value, int):
         if value.startswith("<") and value.endswith(">"):
-            ConfigError.not_filled_properly()
+            ConfigError.not_filled_properly("Unexpected '<>'.")
 
 try:
     SERVER = config["server"]  # These two constants was defined in the code.
     PORT = config["port"]  # Now they are moved to the config.
 except KeyError:
-    ConfigError.not_filled_properly()
+    ConfigError.not_filled_properly("Missing key: server or port.")
 logger.info("SMTP SERVER:%s:%s" % (SERVER, PORT))
 
 # Screenshot
@@ -73,9 +75,11 @@ try:
         case 2:
             connect = smtplib.SMTP(SERVER, PORT)
             connect.starttls(context=ssl.create_default_context())
+        case _:
+            ConfigError.not_filled_properly("Wrong encryption mode.")
     connect.login(config["from-addr"], config["passwd"])
 except KeyError:
-    ConfigError.not_filled_properly()
+    ConfigError.not_filled_properly("Missing key: encryption.")
 logger.info("Successfully connected and logged in to the server.")
 
 # Create email
@@ -89,6 +93,6 @@ try:
     msg.add_attachment(image, maintype='image', subtype='png', filename=screenshot_name)  # Add screenshot as attachment
     connect.sendmail(config["from-addr"], config["to-addr"], msg.as_string())  # Send E-mail
 except KeyError:
-    ConfigError.not_filled_properly()
+    ConfigError.not_filled_properly("Missing key: from-addr, from-name, to-addr, to-name or title.")
 logger.info("Successfully send email.")
 connect.quit()  # Disconnect
