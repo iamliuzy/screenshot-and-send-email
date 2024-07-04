@@ -1,4 +1,5 @@
 # Replace the following <> and the contents between them with the corresponding values
+screenshot-name = "<example.png>"  # The name of the screenshot file.
 from-addr = "<from-email@example.com>"  # The sender's email address
 from-name = "<from-display-name>"  # The sender's display name
 passwd = "<123456>"  # The sender's account password
@@ -16,3 +17,6 @@ encryption = <0>  # The encryption mode of the SMTP server  TODO: Use string for
 #   0 - No encrypting
 #   1 - Encrypted
 #   2 - No encrypting at first, convert to encrypted later.
+# Details of screenshot name:
+#   Date formatting characters (%Y, %m, %d, etc.) can be used, 
+#   see https://docs.python.org/3/library/datetime.html#strftime-and-strptime-format-codes for details

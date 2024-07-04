@@ -1,5 +1,5 @@
 from pyscreeze import screenshot
-from datetime import date
+from datetime import datetime
 import toml
 from sys import exit
 
@@ -54,7 +54,10 @@ except KeyError:
 logger.info("SMTP SERVER:%s:%s" % (SERVER, PORT))
 
 # Screenshot
-screenshot_name = date.today().strftime("%Y年%m月%d日备忘录.png")
+try:
+    screenshot_name = datetime.now().strftime(config["screenshot-name"])
+except KeyError:
+    ConfigError.not_filled_properly("Missing key: screenshot-name.")
 screenshot_folder = Path(".\\screenshots\\")
 screenshot_path = screenshot_folder.joinpath(screenshot_name)
 if not screenshot_folder.exists():
