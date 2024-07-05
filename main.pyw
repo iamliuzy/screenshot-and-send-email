@@ -1,3 +1,19 @@
+# Copyright 2024 iamliuzy
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+
+#     http://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+
+
 from pyscreeze import screenshot
 from datetime import datetime
 import toml
@@ -7,6 +23,24 @@ import smtplib, ssl, logging
 from email.message import EmailMessage
 import argparse
 from pathlib import Path
+
+# Constant definitions.
+VERSION = "0.0.1"
+LICENSE = """
+Copyright 2024 iamliuzy
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+"""
 
 class ConfigError():
     @staticmethod
@@ -31,10 +65,20 @@ logging.basicConfig(format="[%(asctime)s](%(levelname)s) %(message)s",
 config: dict[str, str | int]
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--config", default="config.toml", required=False)
-args = parser.parse_args()
+parser.add_argument("--config", "-C", default="config.toml", required=False)
+parser.add_argument("--version", "-V", action="store_true", required=False)
+parser.add_argument("--license", "-L", action="store_true", required=False)
+args = vars(parser.parse_args())
 
-config_file = Path(vars(args)["config"])
+# If you enter the -V, -version command line arguments, you output the version number and copyright information and exit.
+# If you enter -L, -license command line parameter, then output the copyright information and exit.
+if args["version"]:
+    print("screenshot-and-send-email v%s." % VERSION, end="" if args["license"] else "\n")
+if args["version"] or args["license"]:
+    print("%s\n" % LICENSE)
+    exit()
+
+config_file = Path(args["config"])
 if not config_file.exists():
     ConfigError.not_found()
 try:
